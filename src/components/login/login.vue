@@ -8,23 +8,55 @@
       <el-form-item label="密码">
         <el-input v-model="formdata.password"></el-input>
       </el-form-item>
-      <el-button @click.prevent="handleLogin()" class="login-btn" type="primary">登录</el-button>
+      <el-button @click.prevent="getUserList()" class="login-btn" type="primary">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       formdata: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       }
-    }
+    };
   },
-  methods: {}
-}
+  methods: {
+    async getUserList() {
+      const res = await this.$http.post("login", this.formdata);
+      console.log(res);
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data;
+      if (status === 200) {
+        // 保存用户token
+        const token = localStorage.setItem("token", data.token);
+        // 跳转到首页home
+        await this.$router.push({ name: "home" });
+        // 提示登录成功
+        this.$message.success(msg);
+      } else {
+        this.$message.warning(msg);
+      }
+
+      // this.$http.post("login", this.formdata).then(res => {
+      //   console.log(res);
+      //   const {
+      //     data,
+      //     meta: { msg, status }
+      //   } = res.data;
+      //   if (status === 200) {
+      //     this.$router.push({ name: "home" });
+      //     this.$message.success(msg);
+      //   } else {
+      //     this.$message.warning(msg);
+      //   }
+    }
+  }
+};
 </script>
 
 <style>
