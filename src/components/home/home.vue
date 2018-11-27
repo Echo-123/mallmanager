@@ -21,23 +21,21 @@
       <el-aside width="200px" class="aside">
         <el-row class="tac">
           <el-col :span="24">
-            <el-menu default-active="2" class="el-menu-vertical-demo">
+            <!-- 开启路由模式 -->
+            <el-menu default-active="2" :router="true" class="el-menu-vertical-demo">
               <el-submenu index="1">
                 <template slot="title">
                   <i class="el-icon-location"></i>
-                  <span>导航一</span>
+                  <span>用户管理</span>
                 </template>
-                <el-menu-item index="1-1-1">
-                  <i class="el-icon-location"></i>选项1
-                </el-menu-item>
-                <el-menu-item index="1-1-1">
-                  <i class="el-icon-location"></i>选项1
+                <el-menu-item index="users">
+                  <i class="el-icon-sort"></i>用户列表
                 </el-menu-item>
               </el-submenu>
               <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-location"></i>
-                  <span>导航一</span>
+                  <span>权限管理</span>
                 </template>
                 <el-menu-item index="1-2-1">
                   <i class="el-icon-location"></i>选项1
@@ -46,23 +44,40 @@
                   <i class="el-icon-location"></i>选项1
                 </el-menu-item>
               </el-submenu>
-              <el-menu-item index="3">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
-              </el-menu-item>
-              <el-menu-item index="4">
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-              </el-menu-item>
-              <el-menu-item index="5">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-              </el-menu-item>
+              <el-submenu index="3">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>商品管理</span>
+                </template>
+                <el-menu-item index="1-1-1">
+                  <i class="el-icon-location"></i>用户列表
+                </el-menu-item>
+              </el-submenu>
+              <el-submenu index="4">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>订单管理</span>
+                </template>
+                <el-menu-item index="1-1-1">
+                  <i class="el-icon-location"></i>用户列表
+                </el-menu-item>
+              </el-submenu>
+              <el-submenu index="5">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>数据统计</span>
+                </template>
+                <el-menu-item index="1-1-1">
+                  <i class="el-icon-location"></i>用户列表
+                </el-menu-item>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
       </el-aside>
-      <el-main class="main">Main</el-main>
+      <el-main class="main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -71,25 +86,25 @@
 export default {
   // 再组件渲染之前 if token
   // 钩子函数 在创建vm实例之前
-  beforeCreate() {
+  beforeCreate () {
     // 获取token
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
     // 如果不存在 回到login
     if (!token) {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' })
     }
   },
   methods: {
-    handleLoginOut() {
+    handleLoginOut () {
       // 1. 提示
-      this.$message.success("退出成功");
+      this.$message.success('退出成功')
       // 2. 清除
-      localStorage.clear();
+      localStorage.clear()
       // 3. 回到login组件
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: 'login' })
     }
   }
-};
+}
 </script>
 
 <style>
